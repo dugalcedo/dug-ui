@@ -101,7 +101,7 @@ export default function Field(props) {
 
         // custom
         if (validation) {
-            for (let i = 0; i < validation.length || 0; i++) {
+            for (let i = 0; i < validation.length || 1; i++) {
                 let _validation = validation[i]||validation
                 let missing = _validation.validator(v)
                 if (missing) pushError(_validation.message)
