@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <link rel="stylesheet" href="dug-ui.css">
+    <title>DugUI Demo</title>
+</head>
+<body>
+    <div class="--layout">
+        <header class="--hide-sm --hide-md flex aic jcsb p-2">        
+            <div>
+                <h1>h1s and h2s</h1>
+                <h2>are Syne Mono</h2>
+                <h3>everything else is Space Mono</h3>
+            </div>
+            <nav class="--hide-max-800">
+                <ul class="flex desc-a-p-4">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <nav class="--hide-min-800 --dropdown">
+                <button>
+                    Menu
+                </button>
+                <div class="--menu">
+                    shown
+                </div>
+            </nav>
+        </header>
+        <main class="pt-4">
+            <form class="--container">
+                <div class="--head">
+                    <h2>log in</h2>
+                </div>
+                <main class="--body">
+                    <div class="--field">
+                        <label>
+                            <span>username</span>
+                            <div class="--error"></div>
+                        </label>
+                        <input type="text" placeholder="username">
+                    </div>
+                    <div class="--field">
+                        <label>
+                            <span>password</span>
+                            <div class="--error"></div>
+                        </label>
+                        <input type="password" placeholder="password">
+                    </div>
+                    <div class="--field">
+                        <label>
+                            <span>gender</span>
+                            <div class="--error"></div>
+                        </label>
+                        <select>
+                            <option>male</option>
+                            <option>female</option>
+                            <option>non-binary</option>
+                            <option>prefer not to say</option>
+                        </select>
+                    </div>
+                    <div class="--field">
+                        <label>
+                            <span>i agree to the terms of service and privacy policy</span>
+                            <div class="--error"></div>
+                        </label>
+                        <div><input type="checkbox"></div>
+                    </div>
+                </main>
+                <div class="--foot">
+                    <button>
+                        submit
+                    </button>
+                </div>
+            </form>
+        </main>
+        <footer>
+            <h1>Bye</h1>
+        </footer>
+    </div>
+</body>
+</html>

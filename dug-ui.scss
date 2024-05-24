@@ -1,0 +1,248 @@
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
+
+@font-face {
+    font-family: "syne";
+    src: url("http://dug.wtf/syne");
+}
+
+@font-face {
+    font-family: "space";
+    src: url("http://dug.wtf/space/Regular");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "space";
+    src: url("http://dug.wtf/space/Bold");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "space";
+    src: url("http://dug.wtf/space/Italic");
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "space";
+    src: url("http://dug.wtf/space/BoldItalic");
+    font-weight: bold;
+    font-style: italic;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "space", monospace;
+  font-weight: normal;
+}
+
+:root {
+    --bg-rgb: 17, 17, 17;
+    --bg: rgb(17, 17, 17);
+    --text-rgb: 238, 238, 238;
+    --text: rgb(238, 238, 238);
+    --a: #00ffaa;
+    --error: rgb(255, 44, 16);
+}
+
+@for $n from 1 through 9 {
+    :root {
+        --text-rgba-#{$n}: rgba(var(--text-rgb), 0.#{$n});
+        --text-bg-#{$n}: rgba(var(--bg-rgb), 0.#{$n});
+    }
+}
+
+html {
+    font-size: 16px;
+}
+
+html, body, #app, #root {
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+body {
+    &.--light-theme {
+        --bg: #eee;
+        --text: #111;
+    }
+
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+h1, h2 {
+    font-family: "syne", monospace;
+    font-weight: bold;
+}
+
+ul, ol, dl {
+    list-style: none;
+}
+
+a {
+    color: var(--a);
+    text-decoration: none;
+
+    &:hover {
+        outline: 2px dotted var(--a);
+    }
+}
+
+button {
+    padding: .5rem;
+    cursor: pointer;
+    border-radius: 0;
+    border: 0;
+}
+
+input {
+    border: 0;
+    padding: .5rem;
+    background-color: var(--text);
+    color: var(--bg);
+}
+
+@mixin card() {
+    outline: 1px solid var(--text);
+    border: 1px dashed var(--text);
+    width: 600px;
+    max-width: calc(100% - .5rem);
+
+    margin: 5px;
+    & .--head {
+        background-color: var(--text);
+        color: var(--bg);
+        margin-bottom: .5rem;
+        position: relative;
+        top: -1px;
+        left: -1px;
+        width: calc(100% + 2px);
+        padding: .5rem;
+    }
+    & .--body {
+        padding: .5rem;
+    }
+}
+
+select {
+    appearance: none;
+    border: 0;
+    padding: .5rem;
+    border-radius: 0;
+    cursor: pointer;
+    background-color: var(--text);
+    &:hover {
+        background-color: var(--text-rgba-8);
+    }
+}
+
+input[type="checkbox"], input[type="radio"] {
+    transform: scale(1.5);
+    cursor: pointer;
+    padding: .5rem;
+}
+
+form {
+    @include card();
+
+    & .--field {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        margin-bottom: .5rem;
+        gap: 1rem;
+        & .--error {
+            color: var(--error);
+        }
+        &:hover {
+            background-color: var(--text-rgba-1);
+        }
+    }
+    & .--foot {
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        bottom: -1px;
+        right: -1px;
+    }
+
+}
+
+.--layout {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.--layout main {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.--dropdown {
+    position: relative;
+
+    & .--menu {
+        display: none;
+        position: absolute;
+        right: 0;
+    }
+
+    &:hover {
+        & .--menu {
+            display: block;
+        }
+    }
+}
+
+.--container {
+    width: 1000px;
+    max-width: calc(100% - 1rem);
+    margin: auto;
+}
+
+.flex {display: flex;}
+.aic {align-items: center;}
+.jcsb {justify-content: space-between;}
+.grid {display: grid;}
+
+
+$n: 100;
+@while $n < 1600 {
+    @each $x in (min, max) {
+        .--hide-#{$x}-#{$n} {
+            @media screen and (#{$x}-width: #{$n}px) {
+                display: none;
+            }
+        }
+    }
+    $n: $n+50;
+}
+
+$sides: (
+    "t": (top),
+    "r": (right),
+    "b": (bottom),
+    "l": (left),
+    "x": (left, right),
+    "y": (top, bottom)
+);
+
+@for $n from 1 through 12 {
+    .p-#{$n} {padding: #{$n*0.25}rem;}
+    .m-#{$n} {padding: #{$n*0.25}rem;}
+    @each $abbr, $_sides in $sides {
+        @each $side in $_sides {
+            .p#{$abbr}-#{$n} {padding-#{$side}: #{$n*0.25}rem;}
+            .m#{$abbr}-#{$n} {margin-#{$side}: #{$n*0.25}rem;}
+        }
+    }
+}
