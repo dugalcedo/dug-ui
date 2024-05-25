@@ -57,6 +57,13 @@
         --text-rgba-#{$n}: rgba(var(--text-rgb), 0.#{$n});
         --text-bg-#{$n}: rgba(var(--bg-rgb), 0.#{$n});
     }
+
+    body {
+        &.--light-theme {
+            --text-rgba-#{$n}: rgba(var(--bg-rgb), 0.#{$n});
+            --text-bg-#{$n}: rgba(var(--text-rgb), 0.#{$n});
+        }
+    }
 }
 
 html {
@@ -72,6 +79,11 @@ body {
     &.--light-theme {
         --bg: #eee;
         --text: #111;
+        & button {
+            &:hover {
+                filter: brightness(2);
+            }
+        }
     }
 
     background-color: var(--bg);
@@ -101,10 +113,18 @@ button {
     cursor: pointer;
     border-radius: 0;
     border: 0;
+    background-color: var(--text);
+    color: var(--bg);
+
+    &:hover {
+        outline: 1px dashed var(--text);
+        filter: brightness(0.8);
+    }
 }
 
 input {
     border: 0;
+    border-left: 2px dashed var(--bg);
     padding: .5rem;
     background-color: var(--text);
     color: var(--bg);
@@ -135,10 +155,12 @@ input {
 select {
     appearance: none;
     border: 0;
+    border-bottom: 2px dashed var(--bg);
     padding: .5rem;
     border-radius: 0;
     cursor: pointer;
     background-color: var(--text);
+    color: var(--bg);
     &:hover {
         background-color: var(--text-rgba-8);
     }
@@ -168,6 +190,7 @@ form {
     }
     & .--foot {
         display: flex;
+        gap: 1rem;
         justify-content: flex-end;
         position: relative;
         bottom: -1px;
@@ -209,9 +232,56 @@ form {
     margin: auto;
 }
 
+.--select-with-custom {
+    display: grid;
+    grid-template-columns: 3fr 5fr;
+    align-items: center;
+    gap: .5rem;
+}
+
+.--number-input {
+    display: flex;
+    justify-content: space-around;
+
+    & > button.--bigger-button {
+        font-size: 1.5rem;
+        padding: 0rem .5rem;
+    }
+
+    & > button.--inc {
+        background-color: var(--bg);
+        color: var(--text);
+        border: 1px dashed var(--text-rgba-5);
+    }
+}
+
+.--modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--text-rgba-3);
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    backdrop-filter: blur(3px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & .--modal-window {
+        background-color: var(--bg);
+        width: 600px;
+        max-width: calc(100% - 1rem);
+    }
+}
+
 .flex {display: flex;}
 .aic {align-items: center;}
 .jcsb {justify-content: space-between;}
+.jcsa {justify-content: space-around;}
+.jcse {justify-content: space-evenly;}
+.jcc {justify-content: center;}
 .grid {display: grid;}
 
 

@@ -25,7 +25,9 @@ export default function Form(props) {
             ]}
         */
 
-        submit = 'submit'
+        submit = 'submit',
+
+        validation = data => data,
     } = props
 
     const submitting = useRef(false)
