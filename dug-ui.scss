@@ -49,7 +49,7 @@
     --text-rgb: 238, 238, 238;
     --text: rgb(238, 238, 238);
     --a: #00ffaa;
-    --error: rgb(255, 44, 16);
+    --error: #ff4830;
 }
 
 @for $n from 1 through 9 {
@@ -183,6 +183,13 @@ form {
         gap: 1rem;
         & .--error {
             color: var(--error);
+
+            & > div {
+                &::before {
+                    content: "- "
+                }
+                border-bottom: 1px dotted var(--error);
+            }
         }
         &:hover {
             background-color: var(--text-rgba-1);
@@ -199,13 +206,18 @@ form {
 
 }
 
+.--error-border {
+    border-left: 2px solid var(--error);
+    padding-left: 0.5rem;
+}
+
 .--layout {
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.--layout main {
+.--layout main, .--layout .--main {
     flex-grow: 1;
     overflow-y: auto;
 }
@@ -273,6 +285,12 @@ form {
         background-color: var(--bg);
         width: 600px;
         max-width: calc(100% - 1rem);
+    }
+}
+
+.--input {
+    & input {
+        width: 100%;
     }
 }
 

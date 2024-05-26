@@ -1,4 +1,4 @@
-import Form from "./dug-ui-react/Form.jsx"
+import Form from "./dug-ui-react/Form2.jsx"
 import ThemeToggle from "./dug-ui-react/ThemeToggle.jsx"
 
 function App() {
@@ -11,68 +11,31 @@ function App() {
 
         <ThemeToggle />
         <Form 
-
+          debug={true}
           head={<h2>sign up</h2>}
 
           fields={{
             username: {
-              label: 'username',
-              required: 'required',
-              transform: {
-                beforeValidation(v) {
-                  return v.toLowerCase()
-                }
-              }
+              label: "username",
+              placeholder: "username",
+              required: true,
+              min: 5
             },
             password: {
-              label: 'password',
-              strongPassword: 'must contain at least one of each: lowercase, uppercase, number, symbol',
-              type: 'password'
+              type: 'password',
+              placeholder: 'password',
+              mustMatch: 'password2',
+              required: true,
+              strongPassword: true
             },
             password2: {
+              type: 'password',
+              mustMatch: 'password',
               label: 'repeat password',
-              type: 'password'
-            },
-            color: {
-              label: 'color',
-              type: 'select',
-              options: [
-                'red',
-                'blue',
-                'green',
-                {
-                  text: 'very dark gray',
-                  value: '#222222'
-                }
-              ]
-            },
-            gender: {
-              label: 'gender',
-              type: 'select',
-              customOption: true,
-              options: [
-                'male',
-                'female',
-                'non-binary'
-              ]
-            },
-            age: {
-              label: 'age',
-              type: 'number',
-              range: [16, 125],
+              placeholder: 'repeat password'
             }
           }}
 
-          mustMatch={[
-            {
-              fields: ['password', 'password2'],
-              message: 'passwords must match'
-            }
-          ]}
-
-          handler={(e, data) => {
-            console.log(data)
-          }}
         />
 
       </main>

@@ -4,6 +4,9 @@ import Modal from "./Modal.jsx"
 
 let ID_NO = 0
 
+const pad0 = n => n < 10 ? '0'+n : n
+const formatDate = date => `${date.getFullYear()}-${pad0(date.getMonth()+1)}-${pad0(date.getDate())}`
+
 export default function Field(props) {
     const {
         label,
@@ -23,7 +26,25 @@ export default function Field(props) {
         step = 1,               // numbers only
         extraStep = null,
         numberErrorMessage = null,
-        rangeMsg = (min, max) => `must be between ${min} and ${max} characters long`,
+        rangeMsg = (min, max) => {
+            return inputTypeSwitch({
+                text() {
+                    return `must be between ${min} and ${max} characters long`
+                },
+                number() {
+                    return `must be between ${min} and ${max}`
+                },
+                date() {
+                    if (!min || (min === -Infinity)) {
+                        return `must be ${formatDate(new Date(max))} or before`
+                    } else if (!max || (max === Infinity)) {
+                        return `must be ${formatDate(new Date(min))} or later`
+                    } else {
+                        return `must be between ${formatDate(new Date(max))} and ${formatDate(new Date(min))}`
+                    }
+                }
+            })
+        },
 
         transform = {},
         errorState = "",
@@ -71,9 +92,12 @@ export default function Field(props) {
             text = () => {},
             number = () => {},
             date = () => {},
-            select = () => {}
+            select = () => {},
+            checkbox = () => {}
         } = callbacks
         switch(type) {
+            case 'checkbox':
+                return checkbox()
             case 'select':
                 return select()
             case 'date':
@@ -91,6 +115,7 @@ export default function Field(props) {
     }
 
     const validate = v => {
+        console.log(`Validating ${name}:`, v)
         let errors = null
         const pushError = (msg) => {
             if (!errors) errors = []
@@ -171,6 +196,9 @@ export default function Field(props) {
             },
             select() {
                 return v
+            },
+            checkbox() {
+                return v
             }
         })
 
@@ -225,9 +253,20 @@ export default function Field(props) {
                     {extraStep && <button className="--inc" type="button" onClick={()=>changeNumber(1, true)}>+{extraStep}</button>}
                 </div>
             )
+        },
+        date() {
+            Input = () => (
+                <input name={name} onChange={handleInput} defaultValue={defaultValue} type="date" />
+            )
+        },
+        checkbox() {
+            Input = () => (
+                <input defaultValue={defaultValue} name={name} type="checkbox" onInput={handleInput}/>
+            )
         }
     })
 
+    // DEFAULTS
     useEffect(()=>{
         let v = defaultValue
         inputTypeSwitch({
@@ -236,6 +275,9 @@ export default function Field(props) {
             },
             number() {
                 v = Number(defaultValue) || (range ? range[0] : 0)
+            },
+            date() {
+                if (!v) v = new Date()
             }
         })
         handleInput(null, v)
