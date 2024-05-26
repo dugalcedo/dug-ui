@@ -96,6 +96,7 @@ export default function Form(props) {
                 strongPassword = false,
                 passwordOptions = undefined,
                 mustMatch = null,
+                email = false
             } = field
             ///// MESSAGES /////
             const {
@@ -118,7 +119,8 @@ export default function Form(props) {
                     }
                 },
                 strongPassword: passwordMsg = "insecure password",
-                mustMatch: mustMatchMsg = "fields must match"
+                mustMatch: mustMatchMsg = "fields must match",
+                email: emailMsg = "invalid email"
             } = messages
             ///// VALIDATORS /////
             // required
@@ -140,6 +142,10 @@ export default function Form(props) {
                     if (value2 !== value) matches = false
                 })
                 if (!matches) addError(mustMatchMsg)
+            }
+            // email
+            if (email) {
+                if (!_validator.isEmail(value)) addError(email === true ? emailMsg : email)
             }
         }
         //// SETTING ERRORS /////

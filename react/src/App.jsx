@@ -1,6 +1,7 @@
 import Form from "./dug-ui-react/Form2.jsx"
 import ThemeToggle from "./dug-ui-react/ThemeToggle.jsx"
 
+
 function App() {
 
 
@@ -11,7 +12,7 @@ function App() {
 
         <ThemeToggle />
         <Form 
-          debug={true}
+          // debug={true}
           head={<h2>sign up</h2>}
 
           fields={{
@@ -20,6 +21,12 @@ function App() {
               placeholder: "username",
               required: true,
               min: 5
+            },
+            email: {
+              label: 'email',
+              placeholder: 'email',
+              required: true,
+              email: true
             },
             password: {
               type: 'password',
@@ -33,6 +40,13 @@ function App() {
               mustMatch: 'password',
               label: 'repeat password',
               placeholder: 'repeat password'
+            },
+            age: {
+              type: 'number',
+              label: 'age',
+              min: 16,
+              max: 130,
+              extraStep: 5
             }
           }}
 

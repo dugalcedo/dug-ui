@@ -1,5 +1,6 @@
 import { useRef } from "react"
 import StringField from "./StringField.jsx"
+import NumberField from "./NumberField.jsx"
 
 class IdGenerator {
     #current = 0
@@ -44,6 +45,8 @@ export default function FormField(props) {
             <div className="--input">
                 {(()=>{
                     switch(options.type) {
+                        case 'number':
+                            return <NumberField name={name} options={options} update={update} id={id.current} />
                         case 'text':
                         case 'email':
                         case 'password':
